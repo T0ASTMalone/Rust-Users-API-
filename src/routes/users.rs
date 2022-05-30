@@ -13,7 +13,7 @@ pub fn get_all(conn: DbConn) -> Json<Value> {
     }))
 }
 
-#[post("/new-user", format = "application/json", data = "<new_user>")]
+#[post("/users/create", format = "application/json", data = "<new_user>")]
 pub fn new_user(conn: DbConn, new_user: Json<NewUser>) -> Json<Value> {
     Json(json!({
         "status": User::insert_user(new_user.into_inner(), &conn),
@@ -21,10 +21,27 @@ pub fn new_user(conn: DbConn, new_user: Json<NewUser>) -> Json<Value> {
     }))
 }
 
-#[get("/get-user?<username>")]
-pub fn find_user(conn: DbConn, username: String) -> Json<Value> {
+#[get("/users/<id>")]
+pub fn find_user_by_id(conn: DbConn, id: i32) -> Json<Value> {
+    Json(json!({
+        "status": 200,
+        "result": User::get_user_by_id(id, &conn),
+    }))
+}
+
+#[get("/users/filter?<username>", rank = 2)]
+pub fn find_user_by_name(conn: DbConn, username: String) -> Json<Value> {
     Json(json!({
         "status": 200,
         "result": User::get_user_by_username(username, &conn),
+    }))
+}
+
+
+#[delete("/users/<id>")]
+pub fn delete_user(conn: DbConn, id: i32) -> Json<Value> {
+    Json(json!({
+        "status": 200,
+        "result": User::delete_user(id, &conn),
     }))
 }

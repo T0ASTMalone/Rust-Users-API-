@@ -45,9 +45,22 @@ impl User {
 
     pub fn get_user_by_username(username: String, conn: &PgConnection) -> Vec<User> {
         all_users
-            .filter(users::username.like(username))
+            .filter(users::username.ilike(format!("%{}%", username)))
             .load::<User>(conn)
             .expect("error!")
+    }
+
+    pub fn get_user_by_id(id: i32, conn: &PgConnection) -> Vec<User> {
+        all_users
+            .filter(users::id.eq(id))
+            .load::<User>(conn)
+            .expect("error!")
+    }
+
+    pub fn delete_user(id: i32, conn: &PgConnection) -> bool {
+        diesel::delete(all_users.filter(users::id.eq(id)))
+            .execute(conn)
+            .is_ok()
     }
 
 }

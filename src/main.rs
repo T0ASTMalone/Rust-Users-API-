@@ -14,8 +14,8 @@ extern crate serde_derive;
 #[macro_use]
 extern crate serde_json;
 
-use dotenv::dotenv;
 use std::env;
+use dotenv::dotenv;
 use routes::*;
 // use std::process::Command;
 

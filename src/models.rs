@@ -1,7 +1,7 @@
+use std::time::SystemTime;
 use diesel;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
-use std::time::SystemTime;
 use super::schema::users;
 use super::schema::users::dsl::users as all_users;
 
@@ -43,9 +43,9 @@ impl User {
             .is_ok()
     }
 
-    pub fn get_user_by_username(user: UserData, conn: &PgConnection) -> Vec<User> {
+    pub fn get_user_by_username(username: String, conn: &PgConnection) -> Vec<User> {
         all_users
-            .filter(users::username.eq(user.username))
+            .filter(users::username.like(username))
             .load::<User>(conn)
             .expect("error!")
     }

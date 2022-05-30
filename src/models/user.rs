@@ -57,6 +57,16 @@ impl User {
             .expect("error!")
     }
 
+    pub fn update_user(id: i32, updated_user: NewUser,  conn: &PgConnection) -> Vec<User> {
+        diesel::update(all_users.filter(users::id.eq(id)))
+            .set((
+                users::email.eq(updated_user.email), 
+                users::username.eq(updated_user.username)
+            ))
+            .get_results::<User>(conn)
+            .expect("error!")
+    }
+
     pub fn delete_user(id: i32, conn: &PgConnection) -> bool {
         diesel::delete(all_users.filter(users::id.eq(id)))
             .execute(conn)

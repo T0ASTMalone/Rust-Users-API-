@@ -39,6 +39,7 @@ fn rocket () -> rocket::Rocket {
                 routes::users::new_user, 
                 routes::users::find_user_by_id,
                 routes::users::find_user_by_name,
+                routes::users::update_user,
                 routes::users::delete_user,
             ],
         )

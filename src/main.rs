@@ -16,7 +16,6 @@ extern crate serde_json;
 
 use std::env;
 use dotenv::dotenv;
-use routes::*;
 // use std::process::Command;
 
 mod db;
@@ -35,7 +34,7 @@ fn rocket () -> rocket::Rocket {
         .manage(pool)
         .mount(
             "/api/v1/",
-            routes![get_all, new_user, find_user],
+            routes![routes::users::get_all, routes::users::new_user, routes::users::find_user],
         )
 }
 

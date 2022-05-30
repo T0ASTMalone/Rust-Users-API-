@@ -1,8 +1,8 @@
 
 use rocket_contrib::json::Json;
 use serde_json::Value;
-use super::db::Conn as DbConn;
-use super::models::{User, NewUser};
+use crate::db::Conn as DbConn;
+use crate::models::user::{User, NewUser};
 
 #[get("/users", format = "application/json")]
 pub fn get_all(conn: DbConn) -> Json<Value> {
